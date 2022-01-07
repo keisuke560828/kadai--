@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Google Book Apis</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="container">
+            <div class="header">
+                <p class="header__title">Google Book Apis</p>
+            </div>
+            <!-- ↓この中にコードを書いてください -->
+            <div class="search"><!--  :cut -->
+                <div class="search__text"><!--  :cut -->
+                    <input type="text" id="search-word" class="search__text__input" placeholder="検索する"><!--  :cut -->
+                </div><!--  :cut -->
+                <button id="search-button" class="search__btn">検索する</button><!--  :cut -->
+            </div><!--  :cut -->
+            <div>表示件数:<!--  :cut -->
+                <select id="displayed-num"><!--  :cut -->
+                    <option value=10>10件</option><!--  :cut -->
+                    <option value=20>20件</option><!--  :cut -->
+                    <option value=30>30件</option><!--  :cut -->
+                    <option value=40>40件</option><!--  :cut -->
+                </select><!--  :cut -->
+            </div><!--  :cut -->
+            <ul class="lists"></ul><!--  :cut -->
+
+            <!-- ↑この中にコードを書いてください -->
+        </div>
+    </div>
+    
+<script>
+$(function () {
+
+$("#search-button").click(function () {
+    searchBooks();
+});
+
+function searchBooks() {
+    var searchText = $(".search__text__input").val();
+    var num = $("#displayed-num option:selected").val();
+    var displayedNum = "&maxResults=" + num;
+    $(".lists__item").remove();
+    $(".message").remove();
+
+    //検索をかけた際、それに関する20件が表示される
+    $.ajax({
+            url: 'https://www.googleapis.com/books/v1/volumes?q=' + searchText + displayedNum,
+            type: 'GET',
+            datatype: 'json',
+        })
+        //AJAX通信成功
+        .done(function (data) {
+            alert('通信成功');
+            displayBooks(data);
+        })
+        //AJAX通信失敗
+        .fail(function (err) {
+            alert('通信失敗');
+            displayError(err);
+        });
+}
+
+function displayBooks(data) {
+    var hitsData = data.totalItems;
+    var itemsData = data.items;
+    var template = '';
+
+    if (hitsData === 0) {
+        $(".search").after("<p class='message'>検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>");
+    } else {
+        $(".search").after("<p class='message'>合計" + hitsData + "件ヒットしました</p>");
+    }
+
+
+    $.each(itemsData, function (index, el) {
+        var bookData = el;
+
+        var titleData = bookData.volumeInfo.title;
+        if (bookData.volumeInfo.authors == undefined) {
+            var authorData = "不明";
+        } else {
+            var authorData = bookData.volumeInfo.authors;
+        }
+        if (bookData.volumeInfo.publisher == undefined) {
+            var publisherNameData = "不明";
+        } else {
+            var publisherNameData = bookData.volumeInfo.publisher;
+        }
+        var itemUrl = bookData.volumeInfo.infoLink;
+
+        if (bookData.volumeInfo.imageLinks) {
+            var imageData = bookData.volumeInfo.imageLinks.thumbnail;
+        } else {
+            var imageData = src = "https://dummyimage.com/600x600/cbcbcb/ffffff&text=NO+IMAGE";
+        }
+
+        template += "<li class='lists__item'>" +
+            "<div class='lists__item__inner'>" +
+            "<a href='" + itemUrl + "' class='lists__item__link' target='_blank'>" +
+            "<img src='" + imageData + "' class='lists__item__img' alt=''>" +
+            "<p class='lists__item__detail'>作品名:" + titleData + "</p>" +
+            "<p class='lists__item__detail'>作者:" + authorData + "</p>" +
+            "<p class='lists__item__detail'>出版社:" + publisherNameData + "</p>" +
+            "</a>" +
+            "</div>" +
+            "</li>";
+    });
+    $("ul.lists").prepend(template);
+}
+
+function displayError(err) {
+    var error_code = err.status;
+    if (error_code === 400) {
+        $(".search").after("<p class='message'>キーワードを入力して下さい。</p>");
+    }
+}
+
+});
+</script>
+</body>
+
+</html>
+

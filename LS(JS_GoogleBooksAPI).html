@@ -1,0 +1,95 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <!-- <div id="jq">アイウエオ</div>
+    <div class="jc">11111</div>
+
+    <!-- <div id="a1">11111</div> -->
+    
+    <button id="btn">クリック</button>
+
+    <div id="content"></div>
+
+<script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+
+<script>
+// $("#jq").html("かきくけこ");
+// $(".jc").html("222222");
+// $("div").html("aaaaaaaaaaaa")
+
+// const link = '<a href="#">リンク</a>';
+// $("#a1").html(link);
+// $("#a1").css("color","#ff0000");
+// $("#a1").fadeOut(2000).fadeIn(2000);
+// $("#a1").prepend("サシスセソ");
+// $("#a1").append("かキックケコ");
+
+// $("#btn").on("click",function(){
+// // alert("ok");
+// $("body").css("background","#000000");
+
+// });
+
+// var object1 = {"a":"あ","b":"い","c":"う"}
+// console.dir(object1.a);
+// console.log(object1.b);
+
+// var obj=[
+//     { fname:"Tarou" , Iname:"Yamazaki" },
+//     { fname:"Anna" , Iname:"Smith" },
+//     { fname:"Peter" , Iname:"Jones" }
+// ];
+
+// var json = JSON.stringify(obj);
+// console.log("JSON:"+json);　//JSONの文字列にする書き方
+// var obj2 = JSON.parse(json);　//オブジェクトに戻す書き方
+// console.dir(obj2);
+
+
+// 以下、ラーニングシステム
+
+$.getJSON(
+"https://www.googleapis.com/books/v1/volumes?q=東野圭吾",
+    function(data){
+        console.dir(data); //確認用
+
+        //１つだけ取る
+        //1,items[0]個目のitemsデータを参照
+        var item = data.items[0];
+        //2,item→volumeInfo→titleを参照、id="content"に追加
+        $("#content").html(item.volumeInfo.title);
+
+        //複数を取る
+        // 1,繰り返し処理を使い、すべてののデータを取得し、文字列を作成する
+        var view = ""; //表示文字列を入れる変数
+        for (var i=0; i<data.items.length;i++){
+            var item = data.items[i]; //items[i]項目のitemsデータを参照
+            view += '<ul>';
+            view += '<li>題名;' + item.volumeInfo.title + '</li>';
+            view += '</ul>';
+        }
+        //２,id="content"に文字列を表示
+        $("#content").html( view );
+    }
+);
+
+</script>
+
+
+
+
+
+    
+</body>
+</html> -->

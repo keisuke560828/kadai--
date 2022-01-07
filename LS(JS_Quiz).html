@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>クイズ練習（<span id="number">ここに問題数を表示</span>）</h1>
+    </header>
+    <main>
+        <p id="quest">ここに問題が出題されます</p>
+        <P>
+            <input type="radio" name="toi" value="1"><span id="toi1">選択肢１</span>
+            <input type="radio" name="toi" value="2"><span id="toi2">選択肢２</span>
+            <input type="radio" name="toi" value="3"><span id="toi3">選択肢３</span>
+        </P>
+    </main>
+    <footer>フッター</footer>
+
+    <!-- //for文*jsQuiz-03
+    <h1>for: 反復処理の確認:for</h1>
+    <p id="view">ここにループ処理の結果が表示されます。</p> -->
+
+    <!-- jsQuiz-03,04
+    //ここにセレクトボックスの値が生成されます
+    <select name="" id="date"></select> -->
+
+    <select name="" id="view"></select>
+    <select name="" id="view2"></select>
+    <select name="" id="view3"></select>
+
+<script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+
+<script>
+
+
+    // 以下に配列を記述してください。
+    // 問題数「配列」
+    const num = [
+        "第１問目",
+        "第２問目",
+        "第３問目",
+        "第４問目",
+        "第５問目",
+        "第６問目",
+    ]
+
+    // 問題文「配列」
+    const qs = [
+        "通る時に閉まって、通らない時には開いているものは何？",
+        "話すことがとても好きな道具は何？",
+        "世界の真ん中にいる虫は何？",
+        "世界の真ん中にいる虫は何？",
+        "世界の真ん中にいる虫は何？",
+        "世界の真ん中にいる虫は何？"
+    ];
+
+    //回答選択肢「多重配列」
+    const toi = [
+        ["踏み切り","洗濯機","冷蔵庫"],
+        ["スプーン","シャベル","しゃもじ"],
+        ["てんとう虫","カマキリ","蚊"],
+        ["てんとう虫","カマキリ","蚊"],
+        ["てんとう虫","カマキリ","蚊"],
+        ["てんとう虫","カマキリ","蚊"]
+    ];
+
+    // 答え「配列」
+    const ans=[ 1, 2, 3, 3, 3, 3];
+
+    //最初の問題文&回答選択肢＆回答値を設定「多重配列」
+    let i = 0;  //配列アカウント用で用意
+
+    function q(a){
+        $("#number").html( num[a] );
+        $("#quest").html( qs[a] );
+        $("#toi1").html( toi[a][0]);
+        $("#toi2").html( toi[a][1]);
+        $("#toi3").html( toi[a][2]);
+        $("#toi4").html( toi[a][3]);
+        $("#toi5").html( toi[a][4]);
+        $("#toi6").html( toi[a][5]);
+    }
+
+    // 最初の問題を表示
+    q(i);
+
+    // ラジオボタンをクリックしたらイベント発生
+    $("[name=toi]").on("click",function(){
+        if( $(this).val() == ans [i] ){
+        alert("正解!");
+        }else{
+        alert("間違い!");
+    }
+    i++;
+    q(i);
+    });
+
+    //jsQuiz-01
+    // const a = ["A","B","C"];
+    // a.unshift("*");
+    // a.push("*");
+    // console.log(a);
+    // console.log(a[2]);
+
+    //jsQuiz-02
+    // // let i = 0;
+    // // i++;
+    // // console.log(i);
+    // // i+=100;
+    // // console.log(i);
+    // // for(let i=0; i<10; i++){
+    // //     console.log(i+"回目");
+
+    // // for文
+    // //1,変数の入れ物を作る
+    //     // let str="";
+    // //2,繰り返し処理で文字列を作成
+    // function selectBoxCreate(start,end){
+    //     let str="";
+    // for( let i=start; i<end; i++){
+    //     str +=`<option>${i}</option>`;
+    // }
+    // return str;
+    // }
+    // const year = selectBoxCreate(1970,3000);
+    // const month = selectBoxCreate(1,13);
+    // const date = selectBoxCreate(1,32);
+
+
+    // //3,変数「str」に入っている文字列をpタグid="view"に表示
+    // $("#view").html(year);
+    // $("#view2").html(month);
+    // $("#view3").html(date);
+
+
+    // // jsQuiz-03
+    // //1 配列を作成（必要な分だけ。。。今回は適当数に記述）
+    // const ar =["A","B","C","D","E","F","G","H","I","J"];
+    // //2 変数の入れ物を作成
+    // let str = "";
+    // let len = ar.length;
+    // console.log(len);
+    // //3 繰り返し処理で、文字列と配列を組み合わせを作成
+    // for( let i=0; i<len; i++){
+    //     str += `配列:${ar[i]}<br>`; //配列:ar[i]
+    // }
+    // //4 変数「str」に入っている文字列をpタグid="view"に表示
+    // $("#view").html(str);
+
+
+    // // // jsQuiz-03
+    // // 1 変数strを作成：空文字
+    // let str ="";
+    // // 2 繰り返し処理で、HTMLタグと文字を作成
+    // for( let i=1970; i<3099; i++){
+    //     str = str + "<option>"+ i +"</option>"
+    // }
+    // // 3 変数「str」に入っている文字列をpタグid="view"に表示
+    // $("#date").html(str);
+
+    // jsQuiz-04
+    // function test(){
+    // const str = "関数を知らない";
+    // alert(str);
+    // }
+    // test();
+    
+    // function add(){
+    //     const n = 10 + 10;
+    //     alert(n);
+    // }
+    // add();
+
+    // jsQuiz-04
+    // function addition(a,b){
+    // const n = a+b;
+    // return n;
+    // }
+
+    // const num = addition(100, 300)
+    // console.log(num);
+
+</script>
+
+</body>
+</html>
